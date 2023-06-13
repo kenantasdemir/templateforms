@@ -1,0 +1,45 @@
+<div class="container mt-5 d-flex justify-content-center">
+    <form #emailForm="ngForm" (ngSubmit)="onSubmit()" action="" class="form-group w-50">
+
+        <label for="ad">Adınızı giriniz</label>
+
+        <input autocapitalize="on" autocomplete="off" id="ad" type="text" name="ad"  [(ngModel)]="ad" #nameControl="ngModel" required
+                class="form-control" pattern=".{1,20}" [ngClass]="{'border-danger':nameControl.errors?.['required']}">
+
+        <ng-container *ngIf="emailForm.invalid && emailForm.touched">
+            <div class="text-danger" *ngIf="nameControl.errors?.['required']">
+                *Bu alan zorunludur.
+            </div>
+            <div class="text-danger" *ngIf="nameControl.errors?.['minlength']">
+                    *Ad alanı minimum 5 karakter olmalıdır.
+            </div>
+
+            <div class="text-danger" *ngIf="nameControl.errors?.['maxlength']">
+                    *Ad alanı maksimum 40 karakter olabilir.
+            </div>
+        </ng-container>
+
+
+
+        <label class="mt-5" for="eposta">Email adresiniz</label>
+        <input autocomplete="off" id="eposta" type="text" name="email" [(ngModel)]="email" pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}"
+            #emailControl="ngModel" required class="form-control"
+            [ngClass]="{'border-danger':emailControl.invalid && emailControl.touched}" />
+
+        <ng-container *ngIf="emailForm.invalid && emailForm.touched">
+            <div class="text-danger" *ngIf="emailControl.errors?.['required']">
+                *Bu alan zorunludur
+            </div>
+            <div class="text-danger" *ngIf="emailControl.errors?.['pattern']">
+                Lütfen doğru formatta bir email adresi giriniz
+            </div>
+        </ng-container>
+
+        <button class="btn btn-success mt-5" [disabled]="emailForm.invalid">Kaydet</button>
+        <button class="btn btn-danger mt-5" style="margin-left: 30px;" (click)="resetForm()">Sıfırla</button>
+
+
+
+
+    </form>
+</div>
